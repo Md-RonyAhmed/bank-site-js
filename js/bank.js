@@ -1,39 +1,37 @@
-document.getElementById('deposit-btn').addEventListener('click', function () {
-  const depositInput = document.getElementById('deposit-input');
-  const depositAmount = parseFloat(depositInput.value);
-  const depositText = document.getElementById('deposit-amount');
 
-  const depositTotal = parseFloat(depositText.innerText);
- 
+function getInputValue(inputId) {
+  const input = document.getElementById(inputId);
+  const amount = parseFloat(input.value);
+  input.value = '';
+  return amount;
+}
+
+function updateTotalAmount(amountId,totalAmount) {
+  const amount = document.getElementById(amountId);
+  const total = parseFloat(amount.innerText);
   // update deposit amount
-  const totalDeposit = depositAmount + depositTotal;
-  depositText.innerText = totalDeposit;
+  amount.innerText = totalAmount + total;
+}
 
-  const balanceText = document.getElementById('balance-amount');
+function updateBalance(amountId,balance,isAdd) {
+  const balanceText = document.getElementById(amountId);
   const balanceAmount = parseFloat(balanceText.innerText);
   // update balance amount
-  const totalBalance = depositAmount + balanceAmount;
-  balanceText.innerText = totalBalance;
+  if (isAdd === true) {
+    balanceText.innerText = balance + balanceAmount;
+  } else {
+    balanceText.innerText = balanceAmount - balance;
+  }
+}
 
-  depositInput.value = '';
+document.getElementById('deposit-btn').addEventListener('click', function () {
+  const depositAmount = getInputValue('deposit-input');
+  const totalDeposit = updateTotalAmount('deposit-amount', depositAmount);
+  const totalBalance = updateBalance('balance-amount',depositAmount,true);
 });
 
 document.getElementById('withdraw-btn').addEventListener('click', function () {
-  const withdrawInput = document.getElementById('withdraw-input');
-  const withdrawAmount = parseFloat(withdrawInput.value);
-  const withdrawText = document.getElementById('withdraw-amount');
-
-  const withdrawTotal = parseFloat(withdrawText.innerText);
-
-  // update withdraw amount
-  const totalWithdraw = withdrawAmount + withdrawTotal;
-  withdrawText.innerText = totalWithdraw;
-
-  const balanceText = document.getElementById('balance-amount');
-  const balanceAmount = parseFloat(balanceText.innerText);
-  // update balance amount
-  const totalBalance = balanceAmount - withdrawAmount;
-  balanceText.innerText = totalBalance;
-
-  withdrawInput.value = '';
+  const withdrawAmount = getInputValue('withdraw-input');
+  const totalDeposit = updateTotalAmount('withdraw-amount', withdrawAmount);
+  const totalBalance = updateBalance('balance-amount', withdrawAmount, false);
 });
