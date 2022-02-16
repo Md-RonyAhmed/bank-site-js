@@ -20,7 +20,7 @@ function currentBalance(amountId) {
 
 function updateBalance(amountId, balance, isAdd) {
   const balanceText = document.getElementById(amountId);
-  const balanceAmount = currentBalance("balance-amount");
+  const balanceAmount = currentBalance(amountId);
   // update balance amount
   if (isAdd === true) {
     balanceText.innerText = balance + balanceAmount;
